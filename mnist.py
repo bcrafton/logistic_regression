@@ -39,6 +39,10 @@ y_test = keras.utils.to_categorical(y_test, NUM_CLASSES)
 
 #######################################
 
+def softmax(x):
+    e_x = np.exp(x - np.max(x))
+    return e_x / e_x.sum()
+
 def sigmoid(x):
   return 1 / (1 + np.exp(-x))
 
@@ -66,7 +70,7 @@ for epoch in range(args.epochs):
     for ex in range(TRAIN_EXAMPLES):
         A1 = x_train[ex]
         Z2 = np.dot(A1, weights) + bias
-        A2 = sigmoid(Z2)
+        A2 = softmax(Z2)
         
         ANS = y_train[ex]
         E = A2 - ANS
