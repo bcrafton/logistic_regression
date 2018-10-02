@@ -48,13 +48,15 @@ def sigmoid(x):
 
 #######################################
 
+print (args.epochs, args.alpha, args.scale, args.low)
+
 LAYER1 = 784
 LAYER2 = 10
 
 # remember there is a sigmoid ... so it makes things a little nicer
 # maybe we should use softmax, but sigmoid seems to work fine.
 # trying a bunch of learning rates also a good idea
-low = 1e-2
+low = args.low
 high = args.low * args.scale
 
 weights = np.random.uniform(low, high, size=(LAYER1, LAYER2))
@@ -95,6 +97,7 @@ for epoch in range(args.epochs):
     acc = 1.0 * correct / TEST_EXAMPLES
     print ("accuracy: " + str(acc))
     accs.append(acc)
+    print (np.min(weights), np.max(weights), np.average(weights), np.std(weights))
 
 name = "./results/epochs_%d_alpha_%f_scale_%f_low_%f.npy"% (args.epochs, args.alpha, args.scale, args.low)
 np.save(name, accs)
